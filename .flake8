@@ -5,7 +5,8 @@ inline-quotes = '
 
 exclude =
     .venv,
-    migrations
+    migrations,
+    app/manage.py,
 
 ignore =
     E722,
