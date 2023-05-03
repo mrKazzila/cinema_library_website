@@ -77,14 +77,20 @@ To clone and run this project, you'll need:
    ```bash
    python manage.py migrate
    python manage.py loaddata <path_to_fixture_files>
-   python manage.py runserver 
+   python manage.py runserver
    ```
 
 </details>
 
- 
+
 ## Additional material
-- lorem
+<details>
+<summary>Database schema</summary>
+<a href="https://dbdiagram.io/d/645233b2dca9fb07c46ce5fe">
+    <img style="background-color: #1b1116" src="readme/cinemalib.png"
+    alt="DBschema">
+</a>
+</details>
 
 <br>
 <br>
