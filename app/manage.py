@@ -12,7 +12,7 @@ def main():
     if os.path.exists(dotenv_path):
         load_dotenv(dotenv_path)
     else:
-        raise FileNotFoundError(f'error: file {dotenv_path=} not found!')
+        raise FileNotFoundError(f'error: {dotenv_path=} not found!')
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
     try:
