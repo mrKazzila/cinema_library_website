@@ -32,7 +32,7 @@ repos:
           '--max-line-length=119',
           '--max-complexity=10',
           "--inline-quotes='",
-          '--exclude=.venv, migrations',
+          '--exclude=.venv, *migrations',
           '--ignore=E722, D100, D101, D102, D103, D104, D105, D106, D400, I100, I201, Q003,',
         ]
         additional_dependencies:
