@@ -1,14 +1,14 @@
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-import os
+from os import environ
 
 DATABASES = {
     'default': {
-        'ENGINE': os.environ['DB_ENGINE'],
-        'NAME': os.environ['DB_NAME'],
-        'USER': os.environ['DB_USER'],
-        'PASSWORD': os.environ['DB_PASSWORD'],
-        'HOST': os.environ['DB_HOST'],
-        'PORT': os.environ['DB_PORT'],
+        'ENGINE': environ['DB_ENGINE'],
+        'NAME': environ['DB_NAME'],
+        'USER': environ['DB_USER'],
+        'PASSWORD': environ['DB_PASSWORD'],
+        'HOST': environ['DB_HOST'],
+        'PORT': environ['DB_PORT'],
     },
 }
