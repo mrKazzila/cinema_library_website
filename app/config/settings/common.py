@@ -18,6 +18,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    # Third party apps
+
+    # my_apps
+    'cinemalib.apps.CinemalibConfig',
 ]
 
 MIDDLEWARE = [
