@@ -23,18 +23,13 @@ repos:
             '--recursive',
             '--verbose',
           ]
+          language_version: python3.11
 
 -   repo: https://github.com/PyCQA/flake8
     rev: 6.0.0
     hooks:
       - id: flake8
-        args: [
-          '--max-line-length=119',
-          '--max-complexity=10',
-          "--inline-quotes='",
-          '--exclude=.venv, *migrations',
-          '--ignore=E722, D100, D101, D102, D103, D104, D105, D106, D400, I100, I201, Q003,',
-        ]
+        args: [--config=.flake8, app]
         additional_dependencies:
           - flake8-bugbear
           - flake8-import-order
@@ -42,3 +37,4 @@ repos:
           - flake8-quotes
           - flake8-commas
           - flake8-builtins
+        language_version: python3.11
