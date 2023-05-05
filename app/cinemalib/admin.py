@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from app.cinemalib.models import Category, Movie, Reviews
+from .models import Category, Movie, Reviews
 
 
 @admin.register(Category)
@@ -24,7 +24,12 @@ class ReviewInline(admin.TabularInline):
 
 @admin.register(Movie)
 class MovieAdmin(admin.ModelAdmin):
-    list_display = ('title', 'category', 'url', 'is_draft')
+    list_display = (
+        'title',
+        'category',
+        'url',
+        'is_draft',
+    )
     list_filter = (
         'category',
         'year',
