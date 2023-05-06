@@ -96,7 +96,7 @@ class MovieAdmin(admin.ModelAdmin):
     readonly_fields = ('_get_image',)
     fieldsets = (
         (
-            None,
+            'Title & Tagline',
             {
                 'fields': ((
                     'title',
@@ -105,20 +105,16 @@ class MovieAdmin(admin.ModelAdmin):
             },
         ),
         (
-            None,
+            'Description',
             {
-                'fields': ((
-                    'description',
-                    (
-                        'poster',
-                        '_get_image',
-                    ),
-                ),),
+                'classes': ('collapse',),
+                'fields': (('description',),),
             },
         ),
         (
             None,
             {
+                'classes': ('collapse',),
                 'fields': ((
                     'country',
                     'year',
@@ -127,13 +123,31 @@ class MovieAdmin(admin.ModelAdmin):
             },
         ),
         (
-            'Actors',
+            'Poster',
+            {
+                'classes': ('collapse',),
+                'fields': ((*(
+                    'poster',
+                    '_get_image',
+                ),),),
+            },
+        ),
+        (
+            'Actors & Directors',
             {
                 'classes': ('collapse',),
                 'fields': ((
-                    'actor',
+                    'actors',
                     'directors',
-                    'genre',
+                ),),
+            },
+        ),
+        (
+            'Category & Genre',
+            {
+                'classes': ('collapse',),
+                'fields': ((
+                    'genres',
                     'category',
                 ),),
             },
@@ -141,6 +155,7 @@ class MovieAdmin(admin.ModelAdmin):
         (
             'Finance',
             {
+                'classes': ('collapse',),
                 'fields': ((
                     'budget',
                     'fees_in_usa',
@@ -151,6 +166,7 @@ class MovieAdmin(admin.ModelAdmin):
         (
             'Options',
             {
+                'classes': ('collapse',),
                 'fields': ((
                     'url',
                     'is_draft',
