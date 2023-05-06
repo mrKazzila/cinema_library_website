@@ -4,6 +4,8 @@ from .models import Movie
 
 
 class MovieView(ListView):
+    """List with movies"""
+
     model = Movie
     template_name = 'cinemalib/movies.html'
 
