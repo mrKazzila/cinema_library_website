@@ -1565,12 +1565,3 @@ a.move-top span {
 @media(max-width:320px) {}
 
 /*--//responsive--*/
-.editContent {
-    outline: none;
-    outline-offset: -2px;
-    cursor: inherit;
-    color: rgb(255, 255, 255);
-    font-size: 40px;
-    background-color: rgba(0, 0, 0, 0);
-    font-family: &quot;Source Sans Pro&quot;, sans-serif;
-}
