@@ -1,10 +1,13 @@
-from django.shortcuts import render  # noqa
-from django.views.generic.base import View
+from django.views.generic.list import ListView
+
 from .models import Movie
 
 
-class MovieView(View):
+class MovieView(ListView):
+    model = Movie
+    template_name = 'cinemalib/movies.html'
 
-    def get(self, request):
-        movies = Movie.objects.all()
-        return render(request=request, template_name='cinemalib/movies.html', context={'movies_list': movies})
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data()
+        context['movies_list'] = Movie.objects.all()
+        return context
