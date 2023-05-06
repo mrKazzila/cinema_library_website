@@ -1,4 +1,4 @@
-from django.views.generic.list import ListView
+from django.views.generic import DetailView, ListView
 
 from .models import Movie
 
@@ -8,8 +8,12 @@ class MovieView(ListView):
 
     model = Movie
     template_name = 'cinemalib/movies.html'
+    queryset = Movie.objects.filter(is_draft=False)
 
-    def get_context_data(self, *, object_list=None, **kwargs):
-        context = super().get_context_data()
-        context['movies_list'] = Movie.objects.all()
-        return context
+
+class MovieDetailView(DetailView):
+    """Full movie description"""
+
+    model = Movie
+    slug_field = 'url'
+    template_name = 'cinemalib/moviesingle.html'
