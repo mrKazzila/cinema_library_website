@@ -20,6 +20,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third party apps
+    'ckeditor',
+    'ckeditor_uploader',
 
     # my_apps
     'cinemalib.apps.CinemalibConfig',
