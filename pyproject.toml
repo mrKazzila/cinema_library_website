@@ -12,6 +12,7 @@ django = "3.2.18"
 pillow = "^9.4.0"
 python-dotenv = "^1.0.0"
 psycopg2 = "^2.9.6"
+django-ckeditor = "^6.5.1"
 
 [tool.poetry.group.dev.dependencies]
 yapf = "^0.32.0"
