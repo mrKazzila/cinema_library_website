@@ -241,7 +241,7 @@
         </div>
     </div>
 
-    {% for review in movie.reviews_set.all %}
+    {% for review in movie.get_review %}
          <div class="media py-5">
             <img src="{% static '/images/te2.webp' %}" class="mr-3 img-fluid" alt="image">
 
@@ -256,22 +256,24 @@
                     Answer
                 </a>
 
-<!--                <div class="media mt-5 editContent">-->
-<!--                    <a class="pr-3" href="#">-->
-<!--                        <img src="bundles/images/te1.webp" class="img-fluid "-->
-<!--                             alt="image">-->
-<!--                    </a>-->
+                {% for child_review in review.reviews_set.all %}
+                    <div class="media mt-5 editContent">
+                        <a class="pr-3" href="#">
+                            <img src="{% static '/images/te2.webp' %}" class="img-fluid "
+                                 alt="image">
+                        </a>
 
-<!--                    <div class="media-body">-->
-<!--                        <h5 class="mt-0 editContent">-->
-<!--                            Leia Organa-->
-<!--                        </h5>-->
-<!--                        <p class="mt-2 editContent">-->
-<!--                            test2-->
-<!--                        </p>-->
-<!--                    </div>-->
+                        <div class="media-body">
+                            <h5 class="mt-0 editContent">
+                                {{ child_review.name }}
+                            </h5>
+                            <p class="mt-2 editContent">
+                                {{ child_review.text }}
+                            </p>
+                        </div>
 
-<!--                </div>-->
+                    </div>
+                {% endfor %}
             </div>
         </div>
     {% endfor %}
