@@ -1,5 +1,7 @@
-from django.views.generic import DetailView, ListView
+from django.shortcuts import redirect
+from django.views.generic import DetailView, ListView, View
 
+from .forms import ReviewsForm
 from .models import Movie
 
 
@@ -18,3 +20,19 @@ class MovieDetailView(DetailView):
     queryset = Movie.objects.filter(is_draft=False)
     slug_field = 'url'
     template_name = 'cinemalib/moviesingle.html'
+
+
+class AddReviewView(View):
+    """Reviews"""
+
+    def post(self, request, pk):
+        # TODO: transfer to services
+        form = ReviewsForm(request.POST)
+        movie = Movie.objects.get(id=pk)
+
+        if form.is_valid():
+            form = form.save(commit=False)
+            form.movie = movie
+            form.save()
+
+        return redirect(movie.get_absolute_url())
