@@ -192,6 +192,7 @@
             <div class="contact-single">
                 <h3 class="editContent">
                     <span class="sub-tittle editContent">
+                        {{ movie.review_set.count }}
                     </span>
                     Leave a review
                 </h3>
@@ -241,7 +242,7 @@
     </div>
 
     {% for review in movie.reviews_set.all %}
-        <div class="media py-5">
+         <div class="media py-5">
             <img src="{% static '/images/te2.webp' %}" class="mr-3 img-fluid" alt="image">
 
             <div class="media-body mt-4">
