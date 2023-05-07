@@ -15,5 +15,6 @@ class MovieDetailView(DetailView):
     """Full movie description"""
 
     model = Movie
+    queryset = Movie.objects.filter(is_draft=False)
     slug_field = 'url'
     template_name = 'cinemalib/moviesingle.html'
