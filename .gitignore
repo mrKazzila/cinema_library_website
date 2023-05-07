@@ -162,3 +162,5 @@ cython_debug/
 
 # my ignore
 /app/media/
+/app/static/admin/
+/app/static/ckeditor/
