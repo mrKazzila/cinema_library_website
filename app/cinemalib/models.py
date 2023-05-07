@@ -168,8 +168,8 @@ class RatingStar(models.Model):
     """Rating star for movie"""
 
     class Meta:
-        verbose_name = 'Movie Short'
-        verbose_name_plural = 'Movie Shorts'
+        verbose_name = 'Rating Star'
+        verbose_name_plural = 'Rating Stars'
 
     value = models.PositiveSmallIntegerField(
         verbose_name='Value',
@@ -184,8 +184,8 @@ class Rating(models.Model):
     """Movie rating"""
 
     class Meta:
-        verbose_name = 'Movie rating'
-        verbose_name_plural = 'Movie ratings'
+        verbose_name = 'Movie Rating'
+        verbose_name_plural = 'Movie Ratings'
 
     ip = models.CharField(
         verbose_name='IP address',
