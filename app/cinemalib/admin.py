@@ -36,6 +36,34 @@ class ActorAdmin(admin.ModelAdmin):
         '_get_image',
     )
     readonly_fields = ('_get_image',)
+    fieldsets = (
+        (
+            'Name & Age',
+            {
+                'fields': ((
+                    'name',
+                    'age',
+                ),),
+            },
+        ),
+        (
+            'Description',
+            {
+                'classes': ('collapse',),
+                'fields': (('description',),),
+            },
+        ),
+        (
+            'Image',
+            {
+                'classes': ('collapse',),
+                'fields': ((*(
+                    'image',
+                    '_get_image',
+                ),),),
+            },
+        ),
+    )
 
     def _get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} wight="50" height="60"')
@@ -64,7 +92,7 @@ class MovieShotsInline(admin.TabularInline):
     def _get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} wight="120" height="130"')
 
-    _get_image.short_description = 'Movie Shots'
+    _get_image.short_description = 'Movie Shots Helper'
 
 
 @admin.register(Movie)
@@ -112,7 +140,7 @@ class MovieAdmin(admin.ModelAdmin):
             },
         ),
         (
-            None,
+            'Country & years',
             {
                 'classes': ('collapse',),
                 'fields': ((
@@ -191,6 +219,34 @@ class MovieShortsAdmin(admin.ModelAdmin):
         '_get_image',
     )
     readonly_fields = ('_get_image',)
+    fieldsets = (
+        (
+            'Name & Age',
+            {
+                'fields': ((
+                    'title',
+                    'movie',
+                ),),
+            },
+        ),
+        (
+            'Description',
+            {
+                'classes': ('collapse',),
+                'fields': (('description',),),
+            },
+        ),
+        (
+            'Image',
+            {
+                'classes': ('collapse',),
+                'fields': ((*(
+                    'image',
+                    '_get_image',
+                ),),),
+            },
+        ),
+    )
 
     def _get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} wight="50" height="60"')
@@ -229,4 +285,31 @@ class ReviewsAdmin(admin.ModelAdmin):
     readonly_fields = (
         'name',
         'email',
+    )
+    fieldsets = (
+        (
+            'Movie',
+            {
+                'fields': (('movie',),),
+            },
+        ),
+        (
+            'Name & Email',
+            {
+                'fields': ((
+                    'name',
+                    'email',
+                ),),
+            },
+        ),
+        (
+            'Review text',
+            {
+                'classes': ('collapse',),
+                'fields': ((
+                    'parent',
+                    'text',
+                ),),
+            },
+        ),
     )
