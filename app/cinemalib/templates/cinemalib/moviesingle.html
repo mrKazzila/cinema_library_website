@@ -1,4 +1,6 @@
 {% extends './base.html' %}
+{% load static %}
+
 <title>
     {% block title %}
     {{ movie.title }}
@@ -194,8 +196,11 @@
                     Leave a review
                 </h3>
 
-                <form action="{% url 'add_review' movie.id %}" method="post" class="mt-4">
+                <form action="{% url 'add_review' movie.id %}"
+                      method="post" class="mt-4" id="formReview">
                     {% csrf_token %}
+                    <input type="hidden" name="parent" id="contactparent" value="">
+
                     <div class="form-group editContent"
                          style="outline: none; cursor: inherit;">
                         <label for="contactcomment" class="editContent">
@@ -204,6 +209,7 @@
                         <textarea class="form-control border" rows="5" name="text"
                                   id="contactcomment" required=""></textarea>
                     </div>
+
                     <div class="d-sm-flex">
                         <div class="col-sm-6 form-group p-0 editContent"
                              style="outline: none; cursor: inherit;">
@@ -213,6 +219,7 @@
                             <input type="text" class="form-control border" name="name"
                                    id="contactusername" required="">
                         </div>
+
                         <div class="col-sm-6 form-group ml-sm-3 editContent"
                              style="outline: none; cursor: inherit;">
                             <label for="contactemail" class="editContent">
@@ -222,6 +229,7 @@
                                    id="contactemail" required="">
                         </div>
                     </div>
+
                     <button type="submit"
                             class="mt-3 btn btn-success btn-block py-3">
                         Send
@@ -234,7 +242,7 @@
 
     {% for review in movie.reviews_set.all %}
         <div class="media py-5">
-            <img src="bundles/images/te2.jpg" class="mr-3 img-fluid" alt="image">
+            <img src="{% static '/images/te2.webp' %}" class="mr-3 img-fluid" alt="image">
 
             <div class="media-body mt-4">
                 <h5 class="mt-0 editContent">
@@ -243,26 +251,37 @@
                 <p class="mt-2 editContent">
                     {{ review.text }}
                 </p>
-                <div class="media mt-5 editContent">
-                    <a class="pr-3" href="#">
-                        <img src="bundles/images/te1.webp" class="img-fluid "
-                             alt="image">
-                    </a>
+                <a href="#formReview" onclick="addReview('{{ review.name }}', '{{ review.id }}')">
+                    Answer
+                </a>
 
-                    <div class="media-body">
-                        <h5 class="mt-0 editContent">
-                            Leia Organa
-                        </h5>
-                        <p class="mt-2 editContent">
-                            test2
-                        </p>
-                    </div>
+<!--                <div class="media mt-5 editContent">-->
+<!--                    <a class="pr-3" href="#">-->
+<!--                        <img src="bundles/images/te1.webp" class="img-fluid "-->
+<!--                             alt="image">-->
+<!--                    </a>-->
 
-                </div>
+<!--                    <div class="media-body">-->
+<!--                        <h5 class="mt-0 editContent">-->
+<!--                            Leia Organa-->
+<!--                        </h5>-->
+<!--                        <p class="mt-2 editContent">-->
+<!--                            test2-->
+<!--                        </p>-->
+<!--                    </div>-->
+
+<!--                </div>-->
             </div>
         </div>
     {% endfor %}
 
-    </div>
+</div>
+
+<script>
+    function addReview(name, id) {
+        document.getElementById("contactparent").value = id;
+        document.getElementById("contactcomment").innerText = `${name},`;
+    }
+</script>
 
 {% endblock movie %}
