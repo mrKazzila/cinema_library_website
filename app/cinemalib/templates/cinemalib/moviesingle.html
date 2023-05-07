@@ -1,4 +1,9 @@
 {% extends './base.html' %}
+<title>
+    {% block title %}
+    {{ movie.title }}
+    {% endblock title %}
+</title>
 
 {% block container %}
 <div class="container py-md-3">
