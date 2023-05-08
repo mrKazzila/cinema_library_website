@@ -1,3 +1,4 @@
+{% load cinemalib_tag %}
 <header class="header">
     <div class="container-fluid px-lg-5">
         <nav class="py-4">
@@ -28,21 +29,14 @@
                     </a>
                     <input type="checkbox" id="drop-2">
                     <ul>
-                        <li>
-                            <a href="moviesingle.html">
-                                Films
-                            </a>
-                        </li>
-                        <li>
-                            <a href="moviesingle.html">
-                                Serials
-                            </a>
-                        </li>
-                        <li>
-                            <a href="moviesingle.html">
-                                Cartoons
-                            </a>
-                        </li>
+                        {% get_categories as categories %}
+                        {% for category in categories %}
+                            <li>
+                                <a href="{{ category.url }}">
+                                    {{ category.name }}
+                                </a>
+                            </li>
+                        {% endfor %}
                     </ul>
                 </li>
                 <li>
