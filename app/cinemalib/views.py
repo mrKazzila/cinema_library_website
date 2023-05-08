@@ -103,3 +103,19 @@ class AddStarRatingView(View):
             )
             return HttpResponse(status=201)
         return HttpResponse(status=400)
+
+
+class SearchView(ListView):
+    """Search movie"""
+
+    template_name = 'cinemalib/movies.html'
+    paginate_by = 2
+
+    def get_queryset(self):
+        return Movie.objects.filter(title__icontains=self.request.GET.get('q'))
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        q = self.request.GET.get('q')
+        context['q'] = f'{q=}&'
+        return context
