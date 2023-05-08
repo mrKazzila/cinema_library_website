@@ -52,7 +52,9 @@
                     <span>
                         <b>Director:</b>
                             {% for director in movie.directors.all %}
-                                {{ director.name }}
+                                <a href="{{ director.get_absolute_url }}">
+                                    {{ director.name }}
+                                </a>
                             {% endfor %}
                     </span>
                 </li>
@@ -60,7 +62,9 @@
                     <span>
                         <b>Actors:</b>
                             {% for actor in movie.actors.all %}
-                                {{ actor.name }}
+                                <a href="{{ actor.get_absolute_url }}">
+                                    {{ actor.name }}
+                                </a>
                             {% endfor %}
                     </span>
                 </li>
