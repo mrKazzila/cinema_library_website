@@ -5,8 +5,9 @@ from django.urls import include, path
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('cinemalib.urls')),
     path('ckeditor/', include('ckeditor_uploader.urls')),
+    path('pages/', include('django.contrib.flatpages.urls')),
+    path('', include('cinemalib.urls')),
 ]
 
 if settings.DEBUG:
