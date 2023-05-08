@@ -24,22 +24,14 @@
         Genres
     </h3>
     <ul class="w3layouts-box-list">
-        <li class="editContent" >
-            <input type="checkbox" class="checked">
-            <span class="span editContent" >Anime</span>
-        </li>
+        {% for genre in view.get_genres %}
             <li class="editContent" >
-            <input type="checkbox" class="checked">
-            <span class="span editContent" >Actions</span>
-        </li>
-        <li class="editContent" >
-            <input type="checkbox" class="checked">
-            <span class="span editContent" >Comedies</span>
-        </li>
-        <li class="editContent" >
-            <input type="checkbox" class="checked">
-            <span class="span editContent" >Horrors</span>
-        </li>
+                <input type="checkbox" class="checked">
+                <span class="span editContent">
+                    {{ genre.name }}
+                </span>
+            </li>
+        {% endfor %}
     </ul>
 </div>
 <!-- // preference -->
@@ -50,30 +42,14 @@
         Year
     </h3>
     <ul class="w3layouts-box-list">
-        <li class="editContent" >
-            <input type="checkbox" class="checked">
-            <span class="span editContent" >2020</span>
-        </li>
-        <li class="editContent" >
-            <input type="checkbox" class="checked">
-            <span class="span editContent" >2019</span>
-        </li>
-        <li class="editContent" >
-            <input type="checkbox" class="checked">
-            <span class="span editContent" >2018</span>
-        </li>
-        <li>
-            <input type="checkbox" class="checked">
-            <span class="span editContent" >2017</span>
-        </li>
-        <li class="editContent" >
-            <input type="checkbox" class="checked">
-            <span class="span editContent" >2016</span>
-        </li>
-        <li class="editContent" >
-            <input type="checkbox" class="checked">
-            <span class="span editContent" >2015</span>
-        </li>
+        {% for movie in view.get_years %}
+            <li class="editContent" >
+                <input type="checkbox" class="checked">
+                <span class="span editContent">
+                    {{ movie.year }}
+                </span>
+            </li>
+        {% endfor %}
     </ul>
 </div>
 <!-- //discounts -->
