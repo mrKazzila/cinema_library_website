@@ -1,9 +1,9 @@
-from django.shortcuts import redirect
+from django.shortcuts import HttpResponse, redirect
 from django.views.generic import DetailView, ListView, View
 from django.db.models import Q
 
-from .forms import ReviewsForm
-from .models import Actor, Genre, Movie
+from .forms import RatingForm, ReviewsForm
+from .models import Actor, Genre, Movie, Rating
 
 
 class GenreYearsMixin:
@@ -31,6 +31,11 @@ class MovieDetailView(GenreYearsMixin, DetailView):
     queryset = Movie.objects.filter(is_draft=False)
     slug_field = 'url'
     template_name = 'cinemalib/moviesingle.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['star_form'] = RatingForm()
+        return context
 
 
 class AddReviewView(View):
@@ -70,3 +75,23 @@ class FilterMovieView(GenreYearsMixin, ListView):
             Q(year__in=self.request.GET.getlist('year')) | Q(genres__in=self.request.GET.getlist('genres')),
         ).distinct()
         return queryset
+
+
+class AddStarRatingView(View):
+    """Add star rating for movie"""
+
+    def get_client_ip(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        ip = x_forwarded_for.split(',')[0] if x_forwarded_for else request.META.get('REMOTE_ADDR')
+        return ip
+
+    def post(self, request):
+        form = RatingForm(request.POST)
+        if form.is_valid():
+            Rating.objects.update_or_create(
+                ip=self.get_client_ip(request),
+                movie_id=int(request.POST.get('movie')),
+                defaults={'star_id': int(request.POST.get('star'))},
+            )
+            return HttpResponse(status=201)
+        return HttpResponse(status=400)
