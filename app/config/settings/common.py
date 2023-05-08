@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     # Third party apps
     'ckeditor',
     'ckeditor_uploader',
+    'snowpenguin.django.recaptcha3',
 
     # my_apps
     'cinemalib.apps.CinemalibConfig',
