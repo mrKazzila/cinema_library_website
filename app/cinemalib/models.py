@@ -176,6 +176,7 @@ class RatingStar(models.Model):
     class Meta:
         verbose_name = 'Rating Star'
         verbose_name_plural = 'Rating Stars'
+        ordering = ['-value']
 
     value = models.PositiveSmallIntegerField(
         verbose_name='Value',
