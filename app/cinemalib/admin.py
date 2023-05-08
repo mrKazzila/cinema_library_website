@@ -308,6 +308,7 @@ class RatingAdmin(admin.ModelAdmin):
     list_display = (
         'star',
         'ip',
+        'movie',
     )
 
 
