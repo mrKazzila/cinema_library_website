@@ -1,5 +1,6 @@
 from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView, View
+from django.db.models import Q
 
 from .forms import ReviewsForm
 from .models import Actor, Genre, Movie
@@ -57,3 +58,13 @@ class ActorView(DetailView):
     model = Actor
     template_name = 'cinemalib/actor.html'
     slug_field = 'name'
+
+
+class FilterMovieView(GenreYearsMixin, ListView):
+    """Movie Filter"""
+
+    def get_queryset(self):
+        queryset = Movie.objects.filter(
+            is_draft=False,
+        ).filter(Q(year__in=self.request.GET.getlist('year')) | Q(genres__in=self.request.GET.getlist('genres')))
+        return queryset
