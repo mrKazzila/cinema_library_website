@@ -2,10 +2,20 @@ from django.shortcuts import redirect
 from django.views.generic import DetailView, ListView, View
 
 from .forms import ReviewsForm
-from .models import Actor, Movie
+from .models import Actor, Genre, Movie
 
 
-class MovieView(ListView):
+class GenreYearsMixin:
+    """Mixin for getting movie genres and years"""
+
+    def get_genres(self):
+        return Genre.objects.all()
+
+    def get_years(self):
+        return Movie.objects.filter(is_draft=False).values('year')
+
+
+class MovieView(GenreYearsMixin, ListView):
     """List with movies"""
 
     model = Movie
@@ -13,7 +23,7 @@ class MovieView(ListView):
     queryset = Movie.objects.filter(is_draft=False)
 
 
-class MovieDetailView(DetailView):
+class MovieDetailView(GenreYearsMixin, DetailView):
     """Full movie description"""
 
     model = Movie
