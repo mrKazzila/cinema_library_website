@@ -28,6 +28,7 @@ INSTALLED_APPS = [
 
     # my_apps
     'cinemalib.apps.CinemalibConfig',
+    'subscription.apps.SubscriptionConfig',
 ]
 
 MIDDLEWARE = [
