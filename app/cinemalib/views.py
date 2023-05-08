@@ -52,7 +52,7 @@ class AddReviewView(View):
         return redirect(movie.get_absolute_url())
 
 
-class ActorView(DetailView):
+class ActorView(GenreYearsMixin, DetailView):
     """Actor information"""
 
     model = Actor
@@ -63,8 +63,10 @@ class ActorView(DetailView):
 class FilterMovieView(GenreYearsMixin, ListView):
     """Movie Filter"""
 
+    template_name = 'cinemalib/movies.html'
+
     def get_queryset(self):
         queryset = Movie.objects.filter(
-            is_draft=False,
-        ).filter(Q(year__in=self.request.GET.getlist('year')) | Q(genres__in=self.request.GET.getlist('genres')))
+            Q(year__in=self.request.GET.getlist('year')) | Q(genres__in=self.request.GET.getlist('genres')),
+        )
         return queryset
