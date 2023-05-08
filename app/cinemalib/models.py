@@ -183,7 +183,7 @@ class RatingStar(models.Model):
     )
 
     def __str__(self):
-        return self.value
+        return f'{self.value}'
 
 
 class Rating(models.Model):
