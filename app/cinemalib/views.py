@@ -68,5 +68,5 @@ class FilterMovieView(GenreYearsMixin, ListView):
     def get_queryset(self):
         queryset = Movie.objects.filter(
             Q(year__in=self.request.GET.getlist('year')) | Q(genres__in=self.request.GET.getlist('genres')),
-        )
+        ).distinct()
         return queryset
