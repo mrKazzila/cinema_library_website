@@ -1,3 +1,5 @@
+from ckeditor_uploader.widgets import CKEditorUploadingWidget
+from django import forms
 from django.contrib import admin
 from django.utils.safestring import mark_safe
 
@@ -5,6 +7,19 @@ from .models import (Actor, Category, Genre, Movie, MovieShorts, Rating, RatingS
 
 admin.site.site_title = 'CinemaLib'
 admin.site.site_header = 'CinemaLib'
+
+
+class MovieAdminForm(forms.ModelForm):
+    """Third party setting with forms for admin"""
+
+    description = forms.CharField(
+        label='Description',
+        widget=CKEditorUploadingWidget(),
+    )
+
+    class Meta:
+        model = Movie
+        fields = '__all__'
 
 
 @admin.register(Category)
@@ -36,6 +51,34 @@ class ActorAdmin(admin.ModelAdmin):
         '_get_image',
     )
     readonly_fields = ('_get_image',)
+    fieldsets = (
+        (
+            'Name & Age',
+            {
+                'fields': ((
+                    'name',
+                    'age',
+                ),),
+            },
+        ),
+        (
+            'Description',
+            {
+                'classes': ('collapse',),
+                'fields': (('description',),),
+            },
+        ),
+        (
+            'Image',
+            {
+                'classes': ('collapse',),
+                'fields': ((*(
+                    'image',
+                    '_get_image',
+                ),),),
+            },
+        ),
+    )
 
     def _get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} wight="50" height="60"')
@@ -64,7 +107,7 @@ class MovieShotsInline(admin.TabularInline):
     def _get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} wight="120" height="130"')
 
-    _get_image.short_description = 'Movie Shots'
+    _get_image.short_description = 'Movie Shots Helper'
 
 
 @admin.register(Movie)
@@ -93,10 +136,15 @@ class MovieAdmin(admin.ModelAdmin):
     save_on_top = True
     save_as = True
     list_editable = ('is_draft',)
+    actions = (
+        '_unpublish',
+        '_publish',
+    )
+    form = MovieAdminForm
     readonly_fields = ('_get_image',)
     fieldsets = (
         (
-            None,
+            'Title & Tagline',
             {
                 'fields': ((
                     'title',
@@ -105,20 +153,16 @@ class MovieAdmin(admin.ModelAdmin):
             },
         ),
         (
-            None,
+            'Description',
             {
-                'fields': ((
-                    'description',
-                    (
-                        'poster',
-                        '_get_image',
-                    ),
-                ),),
+                'classes': ('collapse',),
+                'fields': (('description',),),
             },
         ),
         (
-            None,
+            'Country & years',
             {
+                'classes': ('collapse',),
                 'fields': ((
                     'country',
                     'year',
@@ -127,13 +171,31 @@ class MovieAdmin(admin.ModelAdmin):
             },
         ),
         (
-            'Actors',
+            'Poster',
+            {
+                'classes': ('collapse',),
+                'fields': ((*(
+                    'poster',
+                    '_get_image',
+                ),),),
+            },
+        ),
+        (
+            'Actors & Directors',
             {
                 'classes': ('collapse',),
                 'fields': ((
-                    'actor',
+                    'actors',
                     'directors',
-                    'genre',
+                ),),
+            },
+        ),
+        (
+            'Category & Genre',
+            {
+                'classes': ('collapse',),
+                'fields': ((
+                    'genres',
                     'category',
                 ),),
             },
@@ -141,6 +203,7 @@ class MovieAdmin(admin.ModelAdmin):
         (
             'Finance',
             {
+                'classes': ('collapse',),
                 'fields': ((
                     'budget',
                     'fees_in_usa',
@@ -151,6 +214,7 @@ class MovieAdmin(admin.ModelAdmin):
         (
             'Options',
             {
+                'classes': ('collapse',),
                 'fields': ((
                     'url',
                     'is_draft',
@@ -164,6 +228,26 @@ class MovieAdmin(admin.ModelAdmin):
 
     _get_image.short_description = 'Movie Poster'
 
+    def _unpublish(self, request, queryset):
+        """Remove movie from publication"""
+        row_update = queryset.update(is_draft=True)
+        massage_bit = '1 entry was updated' if row_update == 1 else f'{row_update} entries was updated'
+
+        self.message_user(request, f'{massage_bit}')
+
+    def _publish(self, request, queryset):
+        """Add movie publication"""
+        row_update = queryset.update(is_draft=False)
+        massage_bit = '1 entry was added' if row_update == 1 else f'{row_update} entries was added'
+
+        self.message_user(request, f'{massage_bit}')
+
+    _publish.short_description = 'Add movie publication'
+    _publish.allowed_permissions = ('change',)
+
+    _unpublish.short_description = 'Remove movie from publication'
+    _unpublish.allowed_permissions = ('change',)
+
 
 @admin.register(MovieShorts)
 class MovieShortsAdmin(admin.ModelAdmin):
@@ -175,6 +259,34 @@ class MovieShortsAdmin(admin.ModelAdmin):
         '_get_image',
     )
     readonly_fields = ('_get_image',)
+    fieldsets = (
+        (
+            'Name & Age',
+            {
+                'fields': ((
+                    'title',
+                    'movie',
+                ),),
+            },
+        ),
+        (
+            'Description',
+            {
+                'classes': ('collapse',),
+                'fields': (('description',),),
+            },
+        ),
+        (
+            'Image',
+            {
+                'classes': ('collapse',),
+                'fields': ((*(
+                    'image',
+                    '_get_image',
+                ),),),
+            },
+        ),
+    )
 
     def _get_image(self, obj):
         return mark_safe(f'<img src={obj.image.url} wight="50" height="60"')
@@ -196,6 +308,7 @@ class RatingAdmin(admin.ModelAdmin):
     list_display = (
         'star',
         'ip',
+        'movie',
     )
 
 
@@ -213,4 +326,31 @@ class ReviewsAdmin(admin.ModelAdmin):
     readonly_fields = (
         'name',
         'email',
+    )
+    fieldsets = (
+        (
+            'Movie',
+            {
+                'fields': (('movie',),),
+            },
+        ),
+        (
+            'Name & Email',
+            {
+                'fields': ((
+                    'name',
+                    'email',
+                ),),
+            },
+        ),
+        (
+            'Review text',
+            {
+                'classes': ('collapse',),
+                'fields': ((
+                    'parent',
+                    'text',
+                ),),
+            },
+        ),
     )

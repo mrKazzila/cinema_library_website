@@ -46,6 +46,9 @@ class Actor(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse('actor_detail', kwargs={'slug': self.name})
+
 
 class Movie(models.Model):
     """Movie"""
@@ -134,6 +137,9 @@ class Movie(models.Model):
     def get_absolute_url(self):
         return reverse('movie_detail', kwargs={'slug': self.url})
 
+    def get_review(self):
+        return self.reviews_set.filter(parent__isnull=True)
+
 
 class MovieShorts(models.Model):
     """Shorts from movie"""
@@ -168,8 +174,9 @@ class RatingStar(models.Model):
     """Rating star for movie"""
 
     class Meta:
-        verbose_name = 'Movie Short'
-        verbose_name_plural = 'Movie Shorts'
+        verbose_name = 'Rating Star'
+        verbose_name_plural = 'Rating Stars'
+        ordering = ['-value']
 
     value = models.PositiveSmallIntegerField(
         verbose_name='Value',
@@ -177,15 +184,15 @@ class RatingStar(models.Model):
     )
 
     def __str__(self):
-        return self.value
+        return f'{self.value}'
 
 
 class Rating(models.Model):
     """Movie rating"""
 
     class Meta:
-        verbose_name = 'Movie rating'
-        verbose_name_plural = 'Movie ratings'
+        verbose_name = 'Movie Rating'
+        verbose_name_plural = 'Movie Ratings'
 
     ip = models.CharField(
         verbose_name='IP address',
