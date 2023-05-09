@@ -158,11 +158,13 @@
         <h4 class="shop-sing editContent" style="outline: none; cursor: inherit;">
             Movie shots {{ movie.title }}
         </h4>
-        <p>
-            {% for image in movie.movieshorts_set.all %}
-                <img src="{{ image.image.url }}" class="img-movie-shots" alt="{{ image.description }}">
-            {% endfor %}
-        </p>
+        <div class="my-movie-frames">
+            <p>
+                {% for image in movie.movieshorts_set.all %}
+                    <img src="{{ image.image.url }}" class="my-movie-frames-img" alt="{{ image.description }}">
+                {% endfor %}
+            </p>
+        </div>
         <h4 class="shop-sing editContent" style="outline: none; cursor: inherit;">
             About {{ movie.title }}
         </h4>
