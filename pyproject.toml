@@ -14,6 +14,7 @@ python-dotenv = "^1.0.0"
 psycopg2 = "^2.9.6"
 django-ckeditor = "^6.5.1"
 django-recaptcha3 = "^0.4.0"
+django-allauth = "^0.54.0"
 
 [tool.poetry.group.dev.dependencies]
 yapf = "^0.32.0"
