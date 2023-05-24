@@ -55,7 +55,7 @@ To clone and run this project, you'll need:
 
 1. Firstly clone repo
    ```bash
-   git clone git@github.com:mrKazzila/movie_website.git
+   git clone git@github.com:mrKazzila/cinema_library_website.git
    ```
 
 2. Settings Poetry
