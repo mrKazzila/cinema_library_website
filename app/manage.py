@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 def main():
     """Run administrative tasks."""
-    dotenv_path = os.path.join(os.path.dirname(__file__), '..env/.env.project')
+    dotenv_path = os.path.join(os.path.dirname(__file__), '../env/.env.project')
     if os.path.exists(dotenv_path):
         load_dotenv(dotenv_path)
     else:
