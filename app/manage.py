@@ -2,16 +2,9 @@
 import os
 import sys
 
-from dotenv import load_dotenv
-
 
 def main():
     """Run administrative tasks."""
-    dotenv_path = os.path.join(os.path.dirname(__file__), '../env/.env.project')
-    if os.path.exists(dotenv_path):
-        load_dotenv(dotenv_path)
-    else:
-        raise FileNotFoundError(f'error: file {dotenv_path=} not found!')
 
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'config.settings')
     try:
