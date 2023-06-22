@@ -1,5 +1,3 @@
-# Database
-# https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 # https://postgresapp.com/
 from os import environ
 

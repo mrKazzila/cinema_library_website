@@ -1,7 +1,5 @@
 from os import getenv
 
-from .common import BASE_DIR  # noqa
-
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -15,12 +13,6 @@ LOGGING = {
         },
     },
     'handlers': {
-        # 'file': {
-        #     'level': 'WARNING',
-        #     'class': 'logging.FileHandler',
-        #     'filename': BASE_DIR / 'log/log.log',
-        #     'formatter': 'custom_formatter'
-        # },
         'console': {
             'class': 'logging.StreamHandler',
             'formatter': 'custom_formatter',
