@@ -1,16 +1,24 @@
-import os
+from os import environ
 from pathlib import Path
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
+from dotenv import load_dotenv
+
+# Path settings
 BASE_DIR = Path(__file__).resolve().parent.parent
+APPS_DIR = BASE_DIR.resolve().parent
+ROOT_DIR = BASE_DIR.resolve().parent.parent
+ENV_DIR = Path(ROOT_DIR / 'env')
 
-SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
-DEBUG = os.environ['DJANGO_DEBUG']
+# Env settings
+dotenv_path = ENV_DIR / '.env.project'
+load_dotenv(dotenv_path)
 
-ALLOWED_HOSTS = os.environ['DJANGO_ALLOWED_HOSTS'].split(',')
+# Base project settings
+DEBUG = environ['DJANGO_DEBUG']
+SECRET_KEY = environ['DJANGO_SECRET_KEY']
+ALLOWED_HOSTS = environ['DJANGO_ALLOWED_HOSTS'].split(',')
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -28,7 +36,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
 
-    # my_apps
+    # My apps
     'cinemalib.apps.CinemalibConfig',
     'subscription.apps.SubscriptionConfig',
 ]
@@ -51,8 +59,8 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
-            BASE_DIR / '../cinemalib/templates',
-            BASE_DIR / '../subscription/templates',
+            APPS_DIR / 'cinemalib/templates',
+            APPS_DIR / 'subscription/templates',
         ],
         'APP_DIRS': True,
         'OPTIONS': {
@@ -69,8 +77,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'config.wsgi.application'
 
 # Internationalization
-# https://docs.djangoproject.com/en/3.2/topics/i18n/
-
 LANGUAGE_CODE = 'en'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -79,16 +85,14 @@ USE_TZ = True
 
 # Static files
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / '../../static'
-STATICFILES_DIRS = (BASE_DIR / '../static',)
+STATIC_ROOT = ROOT_DIR / 'static'
+STATICFILES_DIRS = (APPS_DIR / 'static',)
 
 # Media files
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / '../../media'
+MEDIA_ROOT = ROOT_DIR / 'media'
 
 # Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_REDIRECT_URL = '/'
